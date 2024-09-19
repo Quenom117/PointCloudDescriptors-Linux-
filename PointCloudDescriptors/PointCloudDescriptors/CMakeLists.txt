@@ -1,5 +1,7 @@
 set(PROJECT_NAME PointCloudDescriptors)
 
+enable_language(C)
+
 ################################################################################
 # Source groups
 ################################################################################
@@ -19,15 +21,26 @@ set(ALL_FILES
     ${Source_Files}
 )
 
+################################################################################
+# Find PCL and QHull packages
+################################################################################
 find_package(PCL 1.3 REQUIRED)
-include_directories(${PCL_INCLUDE_DIRS})
-link_directories(${PCL_LIBRARY_DIRS})
+# Defina o caminho para o diretório que contém QHullConfig.cmake ou qhull-config.cmake
+set(QHull_DIR "/usr/include/libqhull") 
+
+find_package(QHull REQUIRED)
+
+################################################################################
+# Include directories and link libraries
+################################################################################
+include_directories(${PCL_INCLUDE_DIRS} ${QHull_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS} ${QHull_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 ################################################################################
 # Target
 ################################################################################
-add_executable(${PROJECT_NAME} ${ALL_FILES} ${PCL_LIBRARIES})
+add_executable(${PROJECT_NAME} ${ALL_FILES})
 
 use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
 set(ROOT_NAMESPACE PointCloudDescriptors)
@@ -528,7 +541,7 @@ elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x86")
         "zstd_static"
     )
 endif()
-target_link_libraries(${PROJECT_NAME} ${PCL_LIBRARIES}PRIVATE "${ADDITIONAL_LIBRARY_DEPENDENCIES}") ###// add pcl libraries
+target_link_libraries(${PROJECT_NAME} ${PCL_LIBRARIES} ${QHull_LIBRARIES} PRIVATE "${ADDITIONAL_LIBRARY_DEPENDENCIES}") ###// add pcl libraries and qhull
 
 if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
     target_link_directories(${PROJECT_NAME} PRIVATE
