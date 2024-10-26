@@ -1,7 +1,31 @@
 #include <iostream>
 #include <vector>
-#include <io.h> // problem line
 #include <fcntl.h>
+
+//old line: #include<io.h>
+#ifdef _WIN32
+	#include <io.h>
+#elif __linux__
+	#include <inttypes.h>
+	#include <unistd.h>
+	#define __int64 int64_t
+	#define _close close
+	#define _read read
+	#define _lseek64 lseek64
+	#define _O_RDONLY O_RDONLY
+	#define _open open
+	#define _lseeki64 lseek64
+	#define _lseek lseek
+	#define stricmp strcasecmp
+#endif
+// //SAF_Handle.cpp line:458 old line:INFILE = _open(infilename, _O_RDONLY | _O_BINARY);
+// #ifdef __linux__
+// 	INFILE = _open(infilename, _O_RDONLY);
+// #elif
+// 	INFILE = _open(infilename, _O_RDONLY | _O_BINARY);
+// #endif
+
+
 
 // load pcl libraries
 #include <pcl/io/pcd_io.h>
@@ -10,26 +34,23 @@
 #include <pcl/features/normal_3d.h>
 #include <pcl/filters/voxel_grid.h>
 
-#include <cnpy.h>
+#include "cnpy_header_only.h"
 
 #include <pcl/io/vlp_grabber.h>
-
-
-/* 
-	used references for the code source :
-		* http://pointclouds.org/documentation/
-		* http://robotica.unileon.es/index.php/PCL/OpenNI_tutorial_4:_3D_object_recognition_(descriptors)
-*/
 
 /* local 3D descriptors */
 
 // descriptor - USC : Unique Shape Context
 #include <pcl/features/usc.h>
-// descriptor - SHOT : Unique Signatures of Histograms for Local Surface 
+// descriptor - SHOT : Unique Signatures of Histograms for Local Surface
 #include <pcl/features/shot.h>
 
 // histogram visualization
 #include <pcl/visualization/histogram_visualizer.h>
+
+
+#ifndef POINTCLOUDDESCRIPTOR_H
+#define POINTCLOUDDESCRIPTOR_H
 
 class PointCloudDescriptor {
 public:
@@ -83,3 +104,5 @@ private:
 	pcl::PointCloud<pcl::UniqueShapeContext1960>::Ptr _descriptorUSC;
 	std::vector<std::vector<float>> _vectDescriptorUSC;
 };
+
+#endif //POINTCLOUDDESCRIPTOR_H

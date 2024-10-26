@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void main(int argc, char** argv) {
+int main(int argc, char** argv) {
 	cout << "-- Start --" << endl;
 
 	PointCloudDescriptor* pointCloudDescriptor;
@@ -34,7 +34,7 @@ void main(int argc, char** argv) {
 			else {
 				pointCloudDescriptor->ComputeNormals(pointCloudDescriptor->GetCloud());
 				pointCloudDescriptor->ComputeSHOTFeature(pointCloudDescriptor->GetCloud(), pointCloudDescriptor->GetNormals());
-				pointCloudDescriptor->ExportDescriptorNpy(pointCloudDescriptor->GetVectDescriptorSHOT(), npy_out_file); 
+				pointCloudDescriptor->ExportDescriptorNpy(pointCloudDescriptor->GetVectDescriptorSHOT(), npy_out_file);
 			}
 
 			break;
