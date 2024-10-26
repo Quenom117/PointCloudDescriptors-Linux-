@@ -11,6 +11,8 @@
 3. cmake ../src/
 4. make
 
+If the above commands crash, execute `sudo apt install libpcl-*` and try again.
+
 ## Run
 
 `./PointCloudDescriptors 1 ../resources/apple.pcd ./appel.npy 0.05 0.01`
