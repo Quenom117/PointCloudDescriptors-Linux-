@@ -66,9 +66,7 @@ pcl::PointCloud<pcl::Normal>::Ptr PointCloudDescriptor::GetNormals() {
 void PointCloudDescriptor::LoadPcdFile() {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
 	std::cout << "]";
 
 	std::cout << " Loading PCD file : " + this->_pcdFileName + " [";
@@ -96,11 +94,9 @@ void PointCloudDescriptor::LoadPcdFile() {
 void PointCloudDescriptor::ComputeNormals(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud) {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
 	std::cout << "]";
-	
+
 	std::cout << " Computing Normals" << std::endl;;
 
 	this->_normals = pcl::PointCloud<pcl::Normal>::Ptr(new pcl::PointCloud<pcl::Normal>);
@@ -117,9 +113,7 @@ void PointCloudDescriptor::ComputeNormals(pcl::PointCloud<pcl::PointXYZ>::Ptr _c
 void PointCloudDescriptor::ComputeNormalsRgb(pcl::PointCloud<pcl::PointXYZRGB>::Ptr _cloudRgb) {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
 	std::cout << "]";
 
 	std::wcout << " Computing Normals (RGB)" << std::endl;
@@ -138,9 +132,9 @@ void PointCloudDescriptor::ComputeNormalsRgb(pcl::PointCloud<pcl::PointXYZRGB>::
 void PointCloudDescriptor::DownSampling(float voxelSize) {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
+
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
+
 	std::cout << "]";
 
 	if (this->_rgb) {
@@ -190,13 +184,13 @@ void PointCloudDescriptor::ShowPointCloudRgb(pcl::PointCloud<pcl::PointXYZRGB>::
 void PointCloudDescriptor::ComputeSHOTFeature(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud, pcl::PointCloud<pcl::Normal>::Ptr _normals) {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
+
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
+
 	std::cout << "]";
 
 	std::cout << " Computing SHOT Features" << std::endl;
-	
+
 	this->_descriptorSHOT = pcl::PointCloud<pcl::SHOT352>::Ptr(new pcl::PointCloud<pcl::SHOT352>());
 
 	pcl::SHOTEstimation<pcl::PointXYZ, pcl::Normal, pcl::SHOT352> shot;
@@ -220,13 +214,13 @@ void PointCloudDescriptor::ComputeSHOTFeature(pcl::PointCloud<pcl::PointXYZ>::Pt
 void PointCloudDescriptor::ComputeSHOTRGBFeature(pcl::PointCloud<pcl::PointXYZRGB>::Ptr _cloudRgb, pcl::PointCloud<pcl::Normal>::Ptr _normals) {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
+
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
+
 	std::cout << "]";
-	
+
 	std::cout << " Computing SHOT RGB Features" << std::endl;
-	
+
 	this->_descriptorSHOTRgb = pcl::PointCloud<pcl::SHOT1344>::Ptr(new pcl::PointCloud<pcl::SHOT1344>());
 
 	pcl::SHOTColorEstimation<pcl::PointXYZRGB, pcl::Normal, pcl::SHOT1344> shot;
@@ -250,13 +244,13 @@ void PointCloudDescriptor::ComputeSHOTRGBFeature(pcl::PointCloud<pcl::PointXYZRG
 void PointCloudDescriptor::ComputeUSCFeature(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud) {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
+
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
+
 	std::cout << "]";
 
 	std::cout << " Computing USC Features" << std::endl;
-	
+
 	this->_descriptorUSC = pcl::PointCloud<pcl::UniqueShapeContext1960>::Ptr(new pcl::PointCloud<pcl::UniqueShapeContext1960>());
 
 	pcl::UniqueShapeContext<pcl::PointXYZ, pcl::UniqueShapeContext1960, pcl::ReferenceFrame> usc;
@@ -282,13 +276,13 @@ void PointCloudDescriptor::ComputeUSCFeature(pcl::PointCloud<pcl::PointXYZ>::Ptr
 void PointCloudDescriptor::ExportDescriptorNpy(std::vector<std::vector<float>> inputVector, std::string npyFileName) {
 
 	std::cout << "[";
-	_setmode(_fileno(stdout), _O_U16TEXT);
+
 	std::wcout << L"\u2713";
-	_setmode(_fileno(stdout), _O_TEXT);
+
 	std::cout << "]";
 
 	std::cout << " Export Feature Vector " + npyFileName << std::endl;
-	
+
 	std::vector<float> outputVector;
 
 	for (size_t i = 0; i < inputVector.size(); i++)
