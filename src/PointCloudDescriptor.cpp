@@ -2,13 +2,13 @@
 
 /* Constructor & Destructor */
 
-PointCloudDescriptor::PointCloudDescriptor(std::string& pcdFileName, bool rgb, double radiusSearch) {
+PointCloudDescriptor::PointCloudDescriptor(std::string& plyFileName, bool rgb, double radiusSearch) {
 
-	this->_pcdFileName = pcdFileName;
+	this->_plyFileName = plyFileName;
 	this->_rgb = rgb;
 	this->_radiusSearch = radiusSearch;
 
-	this->LoadPcdFile();
+	this->LoadPlyFile();
 }
 
 PointCloudDescriptor::~PointCloudDescriptor() {
@@ -63,18 +63,18 @@ pcl::PointCloud<pcl::Normal>::Ptr PointCloudDescriptor::GetNormals() {
 
 /* Methods */
 
-void PointCloudDescriptor::LoadPcdFile() {
+void PointCloudDescriptor::LoadPlyFile() {
 
 	std::cout << "[";
 	std::wcout << L"\u2713";
 	std::cout << "]";
 
-	std::cout << " Loading PCD file : " + this->_pcdFileName + " [";
+	std::cout << " Loading PLY file : " + this->_plyFileName + " [";
 
 	if (this->_rgb) {
 		this->_cloudRgb = pcl::PointCloud<pcl::PointXYZRGB>::Ptr(new pcl::PointCloud<pcl::PointXYZRGB>);
 
-		if (pcl::io::loadPCDFile <pcl::PointXYZRGB>(_pcdFileName.c_str(), *_cloudRgb) == -1) {
+		if (pcl::io::loadPLYFile <pcl::PointXYZRGB>(_plyFileName.c_str(), *_cloudRgb) == -1) {
 			exit(-1);
 		}
 
@@ -83,7 +83,7 @@ void PointCloudDescriptor::LoadPcdFile() {
 	else {
 		this->_cloud = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>);
 
-		if (pcl::io::loadPCDFile <pcl::PointXYZ>(_pcdFileName.c_str(), *_cloud) == -1) {
+		if (pcl::io::loadPLYFile <pcl::PointXYZ>(_plyFileName.c_str(), *_cloud) == -1) {
 			exit(-1);
 		}
 

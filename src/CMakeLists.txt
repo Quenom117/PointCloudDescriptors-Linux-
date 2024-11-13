@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.22.1)
 project(PointCloudDescriptors)
 
 include(ExternalProject)
@@ -13,7 +13,10 @@ ExternalProject_add(qhull
         PREFIX qhull-prefix
 )
 
+cmake_policy(SET CMP0144 NEW) # set CMP0144 to NEW to enable if() generator expressions
+
 find_package(PCL 1.3 REQUIRED)
+cmake_policy(SET CMP0167 NEW) # set CMP0167 to NEW to enable if() generator expressions
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})

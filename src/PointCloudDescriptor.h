@@ -28,7 +28,7 @@
 
 
 // load pcl libraries
-#include <pcl/io/pcd_io.h>
+#include <pcl/io/ply_io.h>
 #include <pcl/point_types.h>
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/features/normal_3d.h>
@@ -54,14 +54,14 @@
 
 class PointCloudDescriptor {
 public:
-	PointCloudDescriptor(std::string& pcdFileName, bool rgb, double radiusSearch);
+	PointCloudDescriptor(std::string& plyFileName, bool rgb, double radiusSearch);
 	~PointCloudDescriptor();
 
 	void ComputeSHOTFeature(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud, pcl::PointCloud<pcl::Normal>::Ptr _normals);
 	void ComputeSHOTRGBFeature(pcl::PointCloud<pcl::PointXYZRGB>::Ptr _cloud, pcl::PointCloud<pcl::Normal>::Ptr _normals);
 	void ComputeUSCFeature(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud);
 
-	void LoadPcdFile();
+	void LoadPlyFile();
 	void DownSampling(float voxelSize);
 
 	void ShowPointCloud(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud);
@@ -90,7 +90,7 @@ public:
 private:
 	bool _rgb;
 	double _radiusSearch;
-	std::string _pcdFileName;
+	std::string _plyFileName;
 	pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud;
 	pcl::PointCloud<pcl::PointXYZ>::Ptr _cloudDownSample;
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr _cloudRgb;
